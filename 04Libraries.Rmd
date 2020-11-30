@@ -1,6 +1,6 @@
 # Libraries
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
