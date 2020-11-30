@@ -58,9 +58,9 @@ jobs:
       - name: Install npm
         uses: actions/setup-node@v1
 
-     - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@master
-       env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: docs/      
+      - name: Deploy to GitHub Pages
+        uses: Cecilapp/GitHub-Pages-deploy@master
+        env:
+            EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+            GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
+            BUILD_DIR: docs/      
