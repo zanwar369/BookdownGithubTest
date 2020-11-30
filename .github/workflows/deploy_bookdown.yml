@@ -10,30 +10,30 @@ jobs:
   build:
     runs-on: macOS-latest
     env:
-      EMAIL: ${{ secrets.EMAIL }}               
-      GH_TOKEN: ${{ secrets.GH_PAT }}
+      EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+      GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
-      
-      - name: Install packages
-        run: |
-          R -e 'install.packages("bookdown")'
-          
+
       - name: Install pandoc and pandoc citeproc
         run: |
           brew install pandoc
           brew install pandoc-citeproc
           
-      - name: Cache Renv packages
-        uses: actions/cache@v2
-        with:
-          path: $HOME/.local/share/renv
-          key: r-${{ hashFiles('renv.lock') }}
-          restore-keys: r-
+      - name: Install packages
+        run: |
+          R -e 'install.packages("bookdown")'
+          
+#      - name: Cache Renv packages
+#        uses: actions/cache@v2
+#        with:
+#          path: $HOME/.local/share/renv
+#          key: r-${{ hashFiles('renv.lock') }}
+#          restore-keys: r-
 
       - name: Cache bookdown results
         uses: actions/cache@v2
@@ -58,38 +58,4 @@ jobs:
         shell: Rscript {0}
 
       - name: Build site
-        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-# Need to first create an empty gh-pages branch
-# see https://pkgdown.r-lib.org/reference/deploy_site_github.html
-# and also add secrets for a GH_PAT and EMAIL to the repository
-# gh-action from Cecilapp/GitHub-Pages-deploy
-  checkout-and-deploy:
-   runs-on: ubuntu-latest
-   needs: bookdown
-   steps:
-     - name: Checkout
-       uses: actions/checkout@master
-     - name: Download artifact
-       uses: actions/download-artifact@v2
-       with:
-         # Artifact name
-         name: _docs # optional
-         # Destination path
-         path: _docs # optional
-     - name: Deploy to GitHub Pages
-       uses: Cecilapp/GitHub-Pages-deploy@master
-       env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: _docs/                     # "_site/" by default
-    
+        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
