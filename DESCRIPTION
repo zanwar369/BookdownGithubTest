@@ -1,0 +1,9 @@
+Package: r-pkgs
+Title: R Packages
+Version: 0.1
+URL: https://r-pkgs.org/
+Imports:
+  ggplot2,
+  tidyverse,
+  dplyr
+Encoding: UTF-8
