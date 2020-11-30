@@ -83,5 +83,6 @@ jobs:
        env:
           EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
           GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
+          PUBLISH_BRANCH: master
           BUILD_DIR: docs/                     # "_site/" by default
     
